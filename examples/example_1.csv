@@ -1,0 +1,16 @@
+id,first_name,last_name,email,age,city,purchase_amount
+1,John,Smith,john.smith@email.com,34,New York,150.99
+2,Maria,Garcia,mgarcia@email.com,28,Los Angeles,89.50
+3,James,Johnson,jj123@email.com,45,Chicago,299.99
+4,Sarah,Williams,swilliams@email.com,31,Houston,75.25
+5,Michael,Brown,mbrown@email.com,52,Phoenix,199.99
+6,Lisa,Davis,ldavis@email.com,29,Philadelphia,45.75
+7,Robert,Miller,rmiller@email.com,41,San Antonio,250.00
+8,Jennifer,Wilson,jwilson@email.com,37,San Diego,175.50
+9,David,Anderson,danderson@email.com,33,Dallas,125.99
+10,Patricia,Thomas,pthomas@email.com,48,San Jose,399.99
+11,Kevin,Martinez,kmartinez@email.com,26,Austin,88.75
+12,Elizabeth,Taylor,etaylor@email.com,39,Jacksonville,145.50
+13,Richard,Moore,rmoore@email.com,44,San Francisco,275.25
+14,Susan,Jackson,sjackson@email.com,35,Columbus,167.99
+15,Joseph,Martin,jmartin@email.com,50,Seattle,225.50
