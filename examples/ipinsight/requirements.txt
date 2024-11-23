@@ -17,6 +17,7 @@ markdown-it-py==3.0.0
 mdurl==0.1.2
 mock==4.0.3
 multiprocess==0.70.17
+mypy-boto3-s3==1.35.67
 numpy==1.26.4
 packaging==24.2
 pandas==2.2.3

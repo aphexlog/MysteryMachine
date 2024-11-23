@@ -1,11 +1,9 @@
 import sagemaker
-from sagemaker import get_execution_role
 from sagemaker.amazon.amazon_estimator import get_image_uri
 import logging
 from mypy_boto3_s3 import S3Client
 import boto3
 import json
-import csv
 
 logger = logging.getLogger()
 
@@ -136,7 +134,7 @@ def main():
 
     job = create_training_artifact(f"s3://{bucket_name}/output")
     # Specify the data channels for training
-    print(f"s3://{bucket_name}/{training_path}")
+    phkrint(f"s3://{bucket_name}/{training_path}")
     print(f"s3://{bucket_name}/{validation_path}")
     job.fit(
         {

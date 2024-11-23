@@ -53,8 +53,12 @@ IP Insight is an unsupervised learning algorithm that detects suspicious IP addr
 The training data should include:
 - Entity IDs (e.g., usernames, account numbers)
 - IP addresses
-- Timestamps (optional)
-- Additional features (optional)
+
+## Data Processing
+
+The model is an unsupervised learning algorithm that only requires two variables: an entity ID and an IP address. The entity ID can be any unique identifier such as a username or account number.
+
+- This is where the `process_csv.py` script comes in. It preprocesses the data to ensure it is in the correct format for training.
 
 ## Best Practices
 

@@ -12,7 +12,7 @@ def process_data(csv_in: str, csv_out: str) -> None:
     """
     df = pd.read_csv(csv_in)
     processed_df = df[["id", "destination_ip"]]
-    processed_df.to_csv(csv_out, index=False)
+    processed_df.to_csv(csv_out, index=False, header=False)
 
 
 if __name__ == "__main__":
