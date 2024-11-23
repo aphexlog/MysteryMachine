@@ -1,4 +1,4 @@
-
+id,source_ip,destination_ip,source_port,dest_port,bytes_sent,packets,protocol,timestamp,status_code,is_malicious
 44,172.16.12.150,192.168.12.100,161,161,22480,164,SNMP,1705308238,1,0
 45,95.216.254.80,172.16.12.125,23,23,42960,324,TELNET,1705308239,1,1
 46,192.168.13.100,104.18.5.70,52434,443,18420,134,HTTPS,1705308240,1,0
