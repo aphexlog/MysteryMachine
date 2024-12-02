@@ -17,7 +17,7 @@ print("\nColumn names in dataset:")
 print(data.columns.tolist())
 
 # Drop unnecessary columns
-data = data.drop(['comments', 'duration (hours/min)', 'date posted'], axis=1)
+data = data.drop(["comments", "duration (hours/min)", "date posted"], axis=1)
 
 # Clean whitespace from all string columns
 data = data.apply(lambda x: x.str.strip() if x.dtype == "object" else x)
@@ -71,7 +71,7 @@ features = data[
     ]
 ]
 
-with open("data.csv", "w") as f:
+with open("training.csv", "w") as f:
     f.write(data.to_csv(index=False))
 
 
