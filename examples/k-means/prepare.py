@@ -38,7 +38,7 @@ for col in ["duration (seconds)", "latitude", "longitude "]:  # Note the space a
     data[col] = pd.to_numeric(data[col], errors="coerce")
 
 # Drop rows with missing or invalid data in critical columns
-data = data.dropna(subset=["latitude", "longitude", "duration (seconds)"])
+data = data.dropna(subset=["latitude", "longitude ", "duration (seconds)"])
 
 # Scale numerical features
 scaler = StandardScaler()
@@ -57,7 +57,7 @@ features = data[
     [
         "duration (seconds)",
         "latitude",
-        "longitude",
+        "longitude ",
         "hour",
         "day_of_week",
         "shape_encoded",
