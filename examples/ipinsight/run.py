@@ -134,7 +134,7 @@ def main():
 
     job = create_training_artifact(f"s3://{bucket_name}/output")
     # Specify the data channels for training
-    phkrint(f"s3://{bucket_name}/{training_path}")
+    print(f"s3://{bucket_name}/{training_path}")
     print(f"s3://{bucket_name}/{validation_path}")
     job.fit(
         {
