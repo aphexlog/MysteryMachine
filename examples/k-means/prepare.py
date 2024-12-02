@@ -30,7 +30,11 @@ label_encoder = LabelEncoder()
 data["shape_encoded"] = label_encoder.fit_transform(data["shape"].fillna("unknown"))
 
 # Convert mixed-type columns to numeric, setting invalid values to NaN
-for col in ["duration (seconds)", "latitude", "longitude "]:  # Note the space after 'longitude'
+for col in [
+    "duration (seconds)",
+    "latitude",
+    "longitude ",
+]:  # Note the space after 'longitude'
     # First clean any whitespace
     if data[col].dtype == "object":
         data[col] = data[col].str.strip()
@@ -64,8 +68,8 @@ features = data[
     ]
 ]
 
-# with open("data.csv", "w") as f:
-#     f.write(data.to_csv(index=False))
+with open("data.csv", "w") as f:
+    f.write(data.to_csv(index=False))
 
 
 # # Apply K-means
