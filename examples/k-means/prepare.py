@@ -16,6 +16,9 @@ data = pd.read_csv(pathlib.Path(path) / "scrubbed.csv", low_memory=False)
 print("\nColumn names in dataset:")
 print(data.columns.tolist())
 
+# Drop unnecessary columns
+data = data.drop(['comments', 'duration (hours/min)'], axis=1)
+
 # Clean whitespace from all string columns
 data = data.apply(lambda x: x.str.strip() if x.dtype == "object" else x)
 
