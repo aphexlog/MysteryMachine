@@ -30,7 +30,7 @@ for col in ["duration (seconds)", "latitude", "longitude"]:
     # First clean any whitespace
     if data[col].dtype == "object":
         data[col] = data[col].str.strip()
-    # Then convert to numeric 
+    # Then convert to numeric
     data[col] = pd.to_numeric(data[col], errors="coerce")
 
 # Drop rows with missing or invalid data in critical columns
