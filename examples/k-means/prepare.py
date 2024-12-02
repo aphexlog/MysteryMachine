@@ -17,20 +17,30 @@ print("\nColumn names in dataset:")
 print(data.columns.tolist())
 
 # Drop unnecessary columns
-data = data.drop(["comments", "duration (hours/min)", "date posted"], axis=1)
+data = data.drop([
+    "comments", 
+    "duration (hours/min)", 
+    "date posted",
+    # Geographic columns - comment out these lines to include location data
+    "country",
+    "state",
+    "city",
+    # Shape column - comment out this line to include shape data
+    "shape"
+], axis=1)
 
 # Clean whitespace from all string columns
 data = data.apply(lambda x: x.str.strip() if x.dtype == "object" else x)
 
 # Extract datetime features
 data["datetime"] = pd.to_datetime(data["datetime"], errors="coerce")
+# Extract features first
 data["hour"] = data["datetime"].dt.hour
 data["day_of_week"] = data["datetime"].dt.dayofweek + 1
 data["year"] = data["datetime"].dt.year
+# Then convert datetime to Unix timestamp (seconds since epoch)
+data["datetime"] = data["datetime"].astype('int64') // 10**9
 
-# Encode categorical columns
-label_encoder = LabelEncoder()
-data["shape_encoded"] = label_encoder.fit_transform(data["shape"].fillna("unknown"))
 
 # Convert mixed-type columns to numeric, setting invalid values to NaN
 for col in [
@@ -53,6 +63,7 @@ scaled_columns = [
     "duration (seconds)",
     "latitude",
     "longitude ",  # Note the space after 'longitude'
+    "datetime",
     "hour",
     "day_of_week",
     "year",
@@ -66,13 +77,12 @@ features = data[
         "latitude",
         "longitude ",
         "hour",
-        "day_of_week",
-        "shape_encoded",
+        "day_of_week"
     ]
 ]
 
 with open("training.csv", "w") as f:
-    f.write(data.to_csv(index=False))
+    f.write(data.to_csv(index=False, header=False))
 
 
 # # Apply K-means
