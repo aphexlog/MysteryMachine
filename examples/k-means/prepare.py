@@ -12,6 +12,9 @@ print("Path to dataset files:", path)
 # Load data
 data = pd.read_csv(pathlib.Path(path) / "scrubbed.csv")
 
+# Clean whitespace from all string columns
+data = data.apply(lambda x: x.str.strip() if x.dtype == "object" else x)
+
 # Extract datetime features
 data["datetime"] = pd.to_datetime(data["datetime"], errors="coerce")
 data["hour"] = data["datetime"].dt.hour
@@ -24,6 +27,10 @@ data["shape_encoded"] = label_encoder.fit_transform(data["shape"].fillna("unknow
 
 # Convert mixed-type columns to numeric, setting invalid values to NaN
 for col in ["duration (seconds)", "latitude", "longitude"]:
+    # First clean any whitespace
+    if data[col].dtype == "object":
+        data[col] = data[col].str.strip()
+    # Then convert to numeric 
     data[col] = pd.to_numeric(data[col], errors="coerce")
 
 # Drop rows with missing or invalid data in critical columns
