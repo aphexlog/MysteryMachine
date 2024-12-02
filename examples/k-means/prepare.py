@@ -9,8 +9,12 @@ path = kagglehub.dataset_download("NUFORC/ufo-sightings")
 
 print("Path to dataset files:", path)
 
-# Load data
-data = pd.read_csv(pathlib.Path(path) / "scrubbed.csv")
+# Load data with low_memory=False to handle mixed types
+data = pd.read_csv(pathlib.Path(path) / "scrubbed.csv", low_memory=False)
+
+# Print column names to debug
+print("\nColumn names in dataset:")
+print(data.columns.tolist())
 
 # Clean whitespace from all string columns
 data = data.apply(lambda x: x.str.strip() if x.dtype == "object" else x)
