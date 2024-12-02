@@ -71,18 +71,19 @@ scaled_columns = [
 data[scaled_columns] = scaler.fit_transform(data[scaled_columns])
 
 # Prepare features for clustering
-features = data[
-    [
-        "duration (seconds)",
-        "latitude",
-        "longitude ",
-        "hour",
-        "day_of_week"
-    ]
+features = [
+    "duration (seconds)",
+    "latitude",
+    "longitude ",
+    "hour",
+    "day_of_week"
 ]
 
+# Select only the features we want and drop any rows with NaN values
+clean_data = data[features].dropna()
+
 with open("training.csv", "w") as f:
-    f.write(data.to_csv(index=False, header=False))
+    f.write(clean_data.to_csv(index=False, header=False))
 
 
 # # Apply K-means
