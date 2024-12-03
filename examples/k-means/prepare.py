@@ -2,7 +2,7 @@ import kagglehub
 import pathlib
 import pandas as pd
 from sklearn.preprocessing import StandardScaler, LabelEncoder
-# from sklearn.cluster import KMeans
+from sklearn.cluster import KMeans
 
 # Download latest version
 path = kagglehub.dataset_download("NUFORC/ufo-sightings")
@@ -17,17 +17,20 @@ print("\nColumn names in dataset:")
 print(data.columns.tolist())
 
 # Drop unnecessary columns
-data = data.drop([
-    "comments", 
-    "duration (hours/min)", 
-    "date posted",
-    # Geographic columns - comment out these lines to include location data
-    "country",
-    "state",
-    "city",
-    # Shape column - comment out this line to include shape data
-    "shape"
-], axis=1)
+data = data.drop(
+    [
+        "comments",
+        "duration (hours/min)",
+        "date posted",
+        # Geographic columns - comment out these lines to include location data
+        "country",
+        "state",
+        "city",
+        # Shape column - comment out this line to include shape data
+        "shape",
+    ],
+    axis=1,
+)
 
 # Clean whitespace from all string columns
 data = data.apply(lambda x: x.str.strip() if x.dtype == "object" else x)
@@ -39,7 +42,7 @@ data["hour"] = data["datetime"].dt.hour
 data["day_of_week"] = data["datetime"].dt.dayofweek + 1
 data["year"] = data["datetime"].dt.year
 # Then convert datetime to Unix timestamp (seconds since epoch)
-data["datetime"] = data["datetime"].astype('int64') // 10**9
+data["datetime"] = data["datetime"].astype("int64") // 10**9
 
 
 # Convert mixed-type columns to numeric, setting invalid values to NaN
@@ -71,13 +74,7 @@ scaled_columns = [
 data[scaled_columns] = scaler.fit_transform(data[scaled_columns])
 
 # Prepare features for clustering
-features = [
-    "duration (seconds)",
-    "latitude",
-    "longitude ",
-    "hour",
-    "day_of_week"
-]
+features = ["duration (seconds)", "latitude", "longitude ", "hour", "day_of_week"]
 
 # Select only the features we want and drop any rows with NaN values
 clean_data = data[features].dropna()
