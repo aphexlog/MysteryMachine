@@ -1,7 +1,7 @@
 import kagglehub
 import pathlib
 import pandas as pd
-from sklearn.preprocessing import StandardScaler, LabelEncoder
+from sklearn.preprocessing import StandardScaler, LabelEncoder, RobustScaler
 from sklearn.cluster import KMeans
 
 # Download latest version
@@ -26,8 +26,6 @@ data = data.drop(
         "country",
         "state",
         "city",
-        # Shape column - comment out this line to include shape data
-        "shape",
     ],
     axis=1,
 )
@@ -60,6 +58,16 @@ for col in [
 # Drop rows with missing or invalid data in critical columns
 data = data.dropna(subset=["latitude", "longitude ", "duration (seconds)"])
 
+# Encode shape categories
+le = LabelEncoder()
+data['shape'] = le.fit_transform(data['shape'].fillna('unknown'))
+
+# Print unique shapes and their encodings
+shape_mapping = dict(zip(le.classes_, le.transform(le.classes_)))
+print("\nShape encodings:")
+for shape, code in shape_mapping.items():
+    print(f"{shape}: {code}")
+
 # Scale numerical features
 scaler = StandardScaler()
 scaled_columns = [
@@ -74,7 +82,7 @@ scaled_columns = [
 data[scaled_columns] = scaler.fit_transform(data[scaled_columns])
 
 # Prepare features for clustering
-features = ["duration (seconds)", "latitude", "longitude ", "hour", "day_of_week"]
+features = ["duration (seconds)", "latitude", "longitude ", "hour", "day_of_week", "shape"]
 
 # Select only the features we want and drop any rows with NaN values
 clean_data = data[features].dropna()
