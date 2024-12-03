@@ -60,7 +60,7 @@ data = data.dropna(subset=["latitude", "longitude ", "duration (seconds)"])
 
 # Encode shape categories
 le = LabelEncoder()
-data['shape'] = le.fit_transform(data['shape'].fillna('unknown'))
+data["shape"] = le.fit_transform(data["shape"].fillna("unknown"))
 
 # Print unique shapes and their encodings
 shape_mapping = dict(zip(le.classes_, le.transform(le.classes_)))
@@ -82,21 +82,17 @@ scaled_columns = [
 data[scaled_columns] = scaler.fit_transform(data[scaled_columns])
 
 # Prepare features for clustering
-features = ["duration (seconds)", "latitude", "longitude ", "hour", "day_of_week", "shape"]
+features = [
+    "duration (seconds)",
+    "latitude",
+    "longitude ",
+    "hour",
+    "day_of_week",
+    "shape",
+]
 
 # Select only the features we want and drop any rows with NaN values
 clean_data = data[features].dropna()
 
 with open("training.csv", "w") as f:
     f.write(clean_data.to_csv(index=False, header=False))
-
-
-# # Apply K-means
-# kmeans = KMeans(n_clusters=5, random_state=42)
-# kmeans.fit(features)
-
-# # Assign clusters to the data
-# data["cluster"] = kmeans.labels_
-
-# # Display clustered data
-# print(data[["datetime", "city", "state", "cluster"]].head())
