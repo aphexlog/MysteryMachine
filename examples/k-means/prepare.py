@@ -58,8 +58,8 @@ for col in [
 # Drop rows with missing or invalid data in critical columns
 data = data.dropna(subset=["latitude", "longitude ", "duration (seconds)"])
 
-# One-hot encode the shapes
-shape_dummies = pd.get_dummies(data["shape"].fillna("unknown"), prefix="shape")
+# One-hot encode the shapes (using 1/0 instead of True/False)
+shape_dummies = pd.get_dummies(data["shape"].fillna("unknown"), prefix="shape", dtype=int)
 # Add the dummy columns to the main dataframe
 data = pd.concat([data, shape_dummies], axis=1)
 
