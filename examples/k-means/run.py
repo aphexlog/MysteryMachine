@@ -100,7 +100,7 @@ def create_training_artifact(output_path: str) -> sagemaker.estimator.Estimator:
         sagemaker_session=session,
         hyperparameters={
             "k": "3",
-            "feature_dim": "6",
+            "feature_dim": "4",
             "mini_batch_size": "500",
         },
     )
