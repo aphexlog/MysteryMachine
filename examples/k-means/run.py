@@ -114,8 +114,8 @@ def main():
     bucket_name = "kmeans-86589a88-8765-41e7-9019-86560161e6e2"
     create_bucket(bucket_name)
 
-    training_path = "trianing.csv"
-    with open("training.csv", "rb") as f:
+    training_path = "data.csv"
+    with open("data.csv", "rb") as f:
         data = f.read().decode("utf-8")
     upload_data(bucket_name, training_path, data)
 
