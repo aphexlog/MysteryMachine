@@ -107,10 +107,8 @@ def create_training_artifact(output_path: str) -> sagemaker.estimator.Estimator:
         hyperparameters={
             "num_entity_vectors": "10000",  # Number of entity embeddings
             "vector_dim": "128",  # Size of embeddings
-            "batch_size": "1000",  # Training batch size
             "epochs": "10",  # Number of training epochs
             "learning_rate": "0.001",  # Learning rate
-            "num_ip_addresses": "10000",  # Maximum number of IP addresses to track
         },
     )
 

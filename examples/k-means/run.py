@@ -87,7 +87,9 @@ def create_role(role_name: str) -> str:
     return role["Role"]["Arn"]
 
 
-def create_training_artifact(output_path: str) -> sagemaker.estimator.Estimator:
+def create_training_artifact(
+    output_path: str, feature_dim: int, k: int
+) -> sagemaker.estimator.Estimator:
     container = get_image_uri(session.boto_region_name, "kmeans")
     role = create_role("kmeans-role")
     print(f"role: {role}")
@@ -99,16 +101,17 @@ def create_training_artifact(output_path: str) -> sagemaker.estimator.Estimator:
         output_path=output_path,
         sagemaker_session=session,
         hyperparameters={
-            "k": "3",
-            "feature_dim": "4",
+            "k": str(k),
+            "feature_dim": str(feature_dim),
             "mini_batch_size": "500",
+            "epochs": "3",
         },
     )
     return estimator
 
 
 def main():
-    bucket_name = "ipinsights-86589a88-8765-41e7-9019-86560161e6e2"
+    bucket_name = "kmeans-86589a88-8765-41e7-9019-86560161e6e2"
     create_bucket(bucket_name)
 
     training_path = "trianing.csv"
@@ -116,10 +119,9 @@ def main():
         data = f.read().decode("utf-8")
     upload_data(bucket_name, training_path, data)
 
-    job = create_training_artifact(f"s3://{bucket_name}/output")
+    job = create_training_artifact(f"s3://{bucket_name}/output", feature_dim=33, k=10)
     # Specify the data channels for training
     print(f"s3://{bucket_name}/{training_path}")
-    # job.fit({"train": f"s3://{bucket_name}/{training_path}"})
 
     train_input = TrainingInput(
         f"s3://{bucket_name}/{training_path}", content_type="text/csv"
