@@ -22,6 +22,11 @@ This repository provides practical examples of using Amazon SageMaker for differ
    - Configure PCA parameters
    - Handle high-dimensional data
 
+4. **Random Cut Forest (RCF)** - Unsupervised anomaly detection
+   - Learn about anomaly detection
+   - Configure RCF parameters
+   - Process time-series data
+
 ## Getting Started
 
 1. Install dependencies from the root directory:

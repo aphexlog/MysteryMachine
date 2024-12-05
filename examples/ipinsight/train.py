@@ -1,3 +1,7 @@
+import os
+import sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+
 import sagemaker
 from sagemaker.amazon.amazon_estimator import get_image_uri
 import logging

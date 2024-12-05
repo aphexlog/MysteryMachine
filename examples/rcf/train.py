@@ -1,3 +1,7 @@
+import os
+import sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+
 from sagemaker.inputs import TrainingInput
 import sagemaker
 from sagemaker.amazon.amazon_estimator import get_image_uri
@@ -9,7 +13,8 @@ session = sagemaker.Session()
 
 
 def create_training_artifact(
-    output_path: str, feature_dim: int, num_components: int
+    output_path: str,
+    feature_dim: int,
 ) -> sagemaker.estimator.Estimator:
     container = get_image_uri(session.boto_region_name, "randomcutforest")
     role = create_role("rcf-role")
@@ -37,9 +42,7 @@ def main():
         data = f.read().decode("utf-8")
     upload_data(bucket_name, training_path, data)
 
-    job = create_training_artifact(
-        f"s3://{bucket_name}/output", feature_dim=33, num_components=3
-    )
+    job = create_training_artifact(f"s3://{bucket_name}/output", feature_dim=33)
     # Specify the data channels for training
     print(f"s3://{bucket_name}/{training_path}")
 
