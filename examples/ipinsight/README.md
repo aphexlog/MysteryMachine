@@ -73,3 +73,49 @@ Common issues and solutions:
 - Ensure AWS credentials are properly configured
 - Verify S3 bucket permissions
 - Check data format matches expected schema
+# IP Insight Example
+
+This example demonstrates how to use Amazon SageMaker's IP Insight algorithm for detecting anomalous IP addresses.
+
+## What You'll Learn
+
+- How to preprocess CSV data for IP Insight
+- How to configure and train an IP Insight model
+- How to handle multiple data channels (training and validation)
+
+## Data Preparation
+
+1. The `process_csv.py` script shows how to:
+   - Read CSV files with pandas
+   - Extract relevant columns
+   - Format data for IP Insight
+
+2. Required data format:
+   - Two columns: entity ID and IP address
+   - No headers in the processed file
+   - CSV format
+
+## Training
+
+The `train.py` script demonstrates:
+- Setting up SageMaker training job
+- Configuring hyperparameters
+- Handling training and validation datasets
+
+## Usage
+
+1. Prepare your data:
+   ```bash
+   python process_csv.py
+   ```
+
+2. Run training:
+   ```bash
+   python train.py
+   ```
+
+## Key Concepts
+
+- Entity embedding
+- IP address embedding
+- Anomaly detection

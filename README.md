@@ -1,34 +1,56 @@
-# IP Insight Implementation
+# SageMaker Examples for Beginners
 
-This repository contains an implementation of IP Insight, a machine learning model for detecting anomalous IP addresses and user behavior patterns. The project uses Amazon SageMaker for training and deployment.
+This repository provides practical examples of using Amazon SageMaker for different machine learning tasks. It's designed to help beginners understand how to:
+- Preprocess data for SageMaker
+- Set up and configure SageMaker training jobs
+- Work with different SageMaker built-in algorithms
 
-## Project Structure
+## Examples
 
-```
-.
-└── examples/
-    └── ipinsight/
-        ├── process_csv.py   # Data preprocessing
-        ├── run.py           # Main execution script
-        ├── training.csv     # Training dataset
-        └── validation.csv   # Validation dataset
-```
+1. **IP Insight** - Anomaly detection for IP addresses
+   - Learn how to process CSV data
+   - Use SageMaker's IP Insight algorithm
+   - Handle training and validation datasets
+
+2. **K-Means Clustering** - Unsupervised learning example
+   - Understand clustering with SageMaker
+   - Configure k-means hyperparameters
+   - Process numerical data for clustering
+
+3. **PCA (Principal Component Analysis)** - Dimensionality reduction
+   - Learn about feature reduction
+   - Configure PCA parameters
+   - Handle high-dimensional data
 
 ## Getting Started
 
-1. Install the required dependencies:
+1. Install dependencies from the root directory:
    ```bash
    pip install -r requirements.txt
    ```
 
-2. Navigate to the ipinsight directory for detailed instructions on running the model.
+2. Configure AWS credentials:
+   ```bash
+   aws configure
+   ```
 
-## Features
+3. Choose an example from the `examples/` directory and follow its README.
 
-- CSV data processing and preparation
-- Automated AWS SageMaker training setup
-- Model deployment and inference capabilities
-- Built-in validation dataset
+## Project Structure
+
+- `common/` - Shared utilities for AWS and SageMaker
+- `examples/` - Individual algorithm examples
+- Each example contains:
+  - README.md with specific instructions
+  - Data preprocessing code (if needed)
+  - Training script
+
+## Prerequisites
+
+- AWS Account
+- Python 3.7+
+- Basic understanding of machine learning concepts
+- AWS CLI configured with appropriate permissions
 
 ## License
 
