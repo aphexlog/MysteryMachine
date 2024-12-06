@@ -1,6 +1,9 @@
 import os
 import sys
-sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+
+sys.path.append(
+    os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+)
 
 from sagemaker.inputs import TrainingInput
 import sagemaker
@@ -47,7 +50,9 @@ def main():
     print(f"s3://{bucket_name}/{training_path}")
 
     train_input = TrainingInput(
-        f"s3://{bucket_name}/{training_path}", content_type="text/csv"
+        f"s3://{bucket_name}/{training_path}",
+        content_type="text/csv",
+        distribution="ShardedByS3Key",
     )
     job.fit({"train": train_input})
 
