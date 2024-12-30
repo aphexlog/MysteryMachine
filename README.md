@@ -1,4 +1,4 @@
-# SageMaker Examples for Beginners
+# SageMaker Examples
 
 This repository provides practical examples of using Amazon SageMaker for different machine learning tasks. It's designed to help beginners understand how to:
 - Preprocess data for SageMaker
