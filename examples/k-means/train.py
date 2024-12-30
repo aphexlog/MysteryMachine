@@ -1,6 +1,9 @@
 import os
 import sys
-sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+
+sys.path.append(
+    os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+)
 
 from sagemaker.inputs import TrainingInput
 import sagemaker
@@ -10,6 +13,7 @@ from common.aws_utils import create_bucket, upload_data, create_role
 
 logger = logging.getLogger()
 session = sagemaker.Session()
+
 
 def create_training_artifact(
     output_path: str, feature_dim: int, k: int
@@ -33,6 +37,7 @@ def create_training_artifact(
     )
     return estimator
 
+
 def main():
     bucket_name = "kmeans-86589a88-8765-41e7-9019-86560161e6e2"
     create_bucket(bucket_name)
@@ -49,6 +54,7 @@ def main():
         f"s3://{bucket_name}/{training_path}", content_type="text/csv"
     )
     job.fit({"train": train_input})
+
 
 if __name__ == "__main__":
     main()
