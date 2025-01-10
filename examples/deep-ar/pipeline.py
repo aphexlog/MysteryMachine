@@ -1,18 +1,23 @@
 import sagemaker
-from sagemaker.workflow.steps import ProcessingStep, TrainingStep
+from sagemaker.workflow.steps import ProcessingStep, TrainingStep, ProcessingJob
 from sagemaker.workflow.pipeline import Pipeline
-from sagemaker.processing import ScriptProcessor
+from sagemaker.processing import ScriptProcessor, ProcessingOutput, ProcessingInput
 from sagemaker.estimator import Estimator
 from sagemaker.inputs import TrainingInput
 from sagemaker.workflow.parameters import ParameterString
+from sagemaker.amazon.amazon_estimator import get_image_uri
 
 # Define SageMaker session and role
-sagemaker_session = sagemaker.Session()
+session = sagemaker.Session()
 role = sagemaker.get_execution_role()
+# bucket = session.default_bucket()
+bucket_uri = "s3://stock-86589a88-8765-41e7-9019-865601"
+
 
 # Parameters for pipeline
 input_data_uri = ParameterString(
-    name="InputDataUri", default_value="s3://your-bucket/path/to/time-series-data"
+    name="InputDataUri",
+    default_value=f"{bucket_uri}/AAPL.csv",
 )
 
 # Processing step
@@ -27,27 +32,28 @@ processing_step = ProcessingStep(
     name="TimeSeriesDataProcessing",
     processor=processor,
     inputs=[
-        sagemaker.processing.ProcessingInput(  # FIX: This is broken
-            source=input_data_uri, destination="/opt/ml/processing/input"
+        ProcessingInput(
+            input_name="raw_data",
+            source=input_data_uri,
+            destination="/opt/ml/processing/input",
         )
     ],
     outputs=[
-        sagemaker.processing.ProcessingOutput(  # FIX: This is broken
+        ProcessingOutput(
             output_name="processed_data", source="/opt/ml/processing/output"
         )
     ],
     code="scripts/processing.py",
 )
+print(processing_step)
 
 # Training step using DeepAR
 estimator = Estimator(
-    image_uri=sagemaker.image_uris.retrieve(  # FIX: This is broken
-        "forecasting-deepar", sagemaker_session.boto_region_name
-    ),
+    image_uri=get_image_uri(session.boto_region_name, "forecasting-deepar"),
     role=role,
     instance_count=1,
     instance_type="ml.m5.large",
-    output_path="s3://your-bucket/path/to/output",
+    output_path=f"{bucket_uri}/output",
 )
 
 training_step = TrainingStep(
@@ -55,7 +61,7 @@ training_step = TrainingStep(
     estimator=estimator,
     inputs={
         "train": TrainingInput(
-            s3_data=processing_step.properties.ProcessingOutputConfig.Outputs[  # FIX: This is broken
+            s3_data=processing_step.properties.ProcessingOutputConfig.Outputs[
                 "processed_data"
             ].S3Output.S3Uri
         )
@@ -67,7 +73,5 @@ pipeline = Pipeline(name="TimeSeriesPipeline", steps=[processing_step, training_
 
 if __name__ == "__main__":
     pipeline.upsert(role_arn=role)
-    execution = pipeline.start(
-        parameters={"InputDataUri": "s3://your-bucket/path/to/time-series-data"}
-    )
+    execution = pipeline.start(parameters={"InputDataUri": f"{bucket_uri}/AAPL.csv"})
     execution.wait()

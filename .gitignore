@@ -1,5 +1,7 @@
 .aider*
 .env
 processed*
-data.csv
+*.csv
+*.log
+*.zip
 __pycache__/

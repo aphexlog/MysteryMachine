@@ -10,6 +10,7 @@ df = pd.read_csv(input_data_path)
 
 # Example processing: drop missing values
 df_cleaned = df.dropna()
+# df_cleaned = df_cleaned.drop(columns=["date"])
 
 # Save processed data
 os.makedirs("/opt/ml/processing/output", exist_ok=True)
