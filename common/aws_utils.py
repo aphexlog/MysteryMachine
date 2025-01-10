@@ -6,9 +6,9 @@ def create_bucket(bucket: str) -> None:
     """Create an S3 bucket if it doesn't exist."""
     s3 = boto3.client("s3")
     try:
-        s3.head_bucket(Bucket=bucket)
-    except:
         s3.create_bucket(Bucket=bucket)
+    except s3.exceptions.BucketAlreadyOwnedByYou:
+        pass
 
 
 def upload_data(bucket: str, path: str, data: str) -> None:
