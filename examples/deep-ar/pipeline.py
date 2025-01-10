@@ -33,9 +33,8 @@ processing_step = ProcessingStep(
     processor=processor,
     inputs=[
         ProcessingInput(
-            input_name="raw_data",
             source=input_data_uri,
-            destination="/opt/ml/processing/input",
+            destination="/opt/ml/processing/input/",
         )
     ],
     outputs=[

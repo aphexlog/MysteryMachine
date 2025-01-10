@@ -1,8 +1,13 @@
 import os
 import pandas as pd
 
-# Simple data processing example
-input_data_path = "/opt/ml/processing/input/train.csv"
+# Get list of files in the input directory
+input_files = os.listdir("/opt/ml/processing/input")
+if not input_files:
+    raise ValueError("No input files found")
+
+# Read the first input file (assuming single file)
+input_data_path = os.path.join("/opt/ml/processing/input", input_files[0])
 output_data_path = "/opt/ml/processing/output/processed_train.csv"
 
 # Read input data
