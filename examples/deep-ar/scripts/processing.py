@@ -1,22 +1,19 @@
-import os
 import pandas as pd
 
-# Get list of files in the input directory
-input_files = os.listdir("/opt/ml/processing/input")
-if not input_files:
-    raise ValueError("No input files found")
 
-# Read the first input file (assuming single file)
-input_data_path = os.path.join("/opt/ml/processing/input", input_files[0])
-output_data_path = "/opt/ml/processing/output/processed_train.csv"
+# Example processing script
+def main():
+    # Load your input data
+    input_path = "/opt/ml/processing/input/AAPL.csv"
+    df = pd.read_csv(input_path)
 
-# Read input data
-df = pd.read_csv(input_data_path)
+    # Perform some processing
+    processed_data = df[df["Close"] > 100]
 
-# Example processing: drop missing values
-df_cleaned = df.dropna()
-# df_cleaned = df_cleaned.drop(columns=["date"])
+    # Save processed output
+    output_path = "/opt/ml/processing/output/processed_data.csv"
+    processed_data.to_csv(output_path, index=False)
 
-# Save processed data
-os.makedirs("/opt/ml/processing/output", exist_ok=True)
-df_cleaned.to_csv(output_data_path, index=False)
+
+if __name__ == "__main__":
+    main()
