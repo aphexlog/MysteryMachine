@@ -61,9 +61,7 @@ training_step = TrainingStep(
     estimator=estimator,
     inputs={
         "train": TrainingInput(
-            s3_data=processing_step.properties.ProcessingOutputConfig.Outputs[
-                "processed_data"
-            ].S3Output.S3Uri
+            s3_data=processing_step.properties.ProcessingOutputConfig.Outputs[0].S3Output.S3Uri
         )
     },
 )
